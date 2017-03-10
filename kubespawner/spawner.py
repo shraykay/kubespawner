@@ -412,6 +412,23 @@ class KubeSpawner(Spawner):
             'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount',
             'readOnly': True
         }]
+        self.log.info(make_pod_spec( 
+            self.pod_name,
+            self.singleuser_image_spec,
+            self.singleuser_image_pull_policy,
+            self.singleuser_image_pull_secrets,
+            self.singleuser_uid,
+            self.singleuser_fs_gid,
+            self.get_env(),
+            self._expand_all(self.volumes) + hack_volumes,
+            self._expand_all(self.volume_mounts) + hack_volume_mounts,
+            self.cpu_limit,
+            self.cpu_guarantee,
+            self.mem_limit,
+            self.mem_guarantee,
+            self.singleuser_configmap,
+            self.singleuser_configmap_envs,
+        )
         return make_pod_spec(
             self.pod_name,
             self.singleuser_image_spec,
